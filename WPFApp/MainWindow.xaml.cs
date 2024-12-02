@@ -24,7 +24,7 @@ namespace WPFApp
         void CreateTask() 
         {
             Task T;
-            // Que e s un delegado? Es un apuntador a funciones
+            // Que es un delegado? Es un apuntador a funciones
             var Code = new Action(ShowMesage);
             T = new Task(Code);
             Task T2 = new Task(delegate
@@ -32,8 +32,24 @@ namespace WPFApp
 				MessageBox.Show("Ejecutando una tarea en un metodo anonimo");
 			}
             );
+
+            Task T3 = new Task(
+                () => ShowMesage());
+
+            //EXPRESION Lambda:
+            //(paremetros de entrada) => Expresion
+
+            Task T4 = new Task(()=> MessageBox.Show("Ejecutando la tarea 4"));
+
+            Task T5 = new Task(() => 
+                {
+                    DateTime CurrentDate = DateTime.Today;
+					DateTime StartDate = CurrentDate.AddDays(30);
+                    MessageBox.Show($"Tarea 5. Fecha Calculada: {StartDate}");
+				});
         }
 
+		
         void ShowMesage()
         {
             MessageBox.Show("Ejecutando el metodo ShowMessage");
