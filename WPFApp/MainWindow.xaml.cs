@@ -20,5 +20,25 @@ namespace WPFApp
         {
             InitializeComponent();
         }
-    }
+
+        void CreateTask() 
+        {
+            Task T;
+            // Que e s un delegado? Es un apuntador a funciones
+            var Code = new Action(ShowMesage);
+            T = new Task(Code);
+            Task T2 = new Task(delegate
+			{
+				MessageBox.Show("Ejecutando una tarea en un metodo anonimo");
+			}
+            );
+        }
+
+        void ShowMesage()
+        {
+            MessageBox.Show("Ejecutando el metodo ShowMessage");
+		}
+
+       
+}
 }
