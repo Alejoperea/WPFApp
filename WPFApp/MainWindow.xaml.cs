@@ -19,6 +19,18 @@ namespace WPFApp
         public MainWindow()
         {
             InitializeComponent();
+            CreateTask();
+        }
+
+        void AddMessage (string message)
+        {
+            int CurrentThread = Thread.CurrentThread.ManagedThreadId;
+            this.Dispatcher.Invoke(() =>
+            {
+                Messages.Content +=
+                    $"Mensaje: {message}, " +
+                    $"Hilo Actual: {Thread.CurrentThread.ManagedThreadId}\n";
+            });
         }
 
         void CreateTask() 
@@ -32,7 +44,7 @@ namespace WPFApp
 				MessageBox.Show("Ejecutando una tarea en un metodo anonimo");
 			}
             );
-
+            Task T3A = new Task(ShowMesage);
             Task T3 = new Task(
                 () => ShowMesage());
 
@@ -47,7 +59,15 @@ namespace WPFApp
 					DateTime StartDate = CurrentDate.AddDays(30);
                     MessageBox.Show($"Tarea 5. Fecha Calculada: {StartDate}");
 				});
-        }
+
+            Task T6 = new Task((message) =>
+            MessageBox.Show(message.ToString()), "Expresion lambda con parametros.");
+
+            Task T7 = new Task(() => AddMessage("Ejecutando la tarea."));
+            T7.Start();
+            AddMessage("En el hilo principal");
+
+		}
 
 		
         void ShowMesage()
